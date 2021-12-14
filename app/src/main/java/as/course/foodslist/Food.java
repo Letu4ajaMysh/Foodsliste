@@ -2,8 +2,8 @@ package as.course.foodslist;
 
 public class Food {
     private String name;
-    private double price;
-    private double calories;
+    private Double price;
+    private Double calories;
     private Integer id;
     private String description;
 
@@ -16,6 +16,12 @@ public class Food {
         this.calories = calories;
         this.id = id;
         this.description = description;
+    }
+
+    public Food(String name, Double price,Integer id) {
+        this.name = name;
+        this.price = price;
+        this.id = id;
     }
 
     public String getName ( ) {
