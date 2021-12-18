@@ -75,6 +75,7 @@ public class FoodsXMLParser {
         Boolean isFound = false;
         Boolean isName = false;
         Boolean isPrice = false;
+        Boolean isDescription = false;
 
         try {
             int eventType = xpp.getEventType();
@@ -93,6 +94,9 @@ public class FoodsXMLParser {
                 if (eventType == XmlPullParser.START_TAG && xpp.getName().equals("price")) {
                     isPrice = true;
                 }
+                if (eventType == XmlPullParser.START_TAG && xpp.getName().equals("description")) {
+                    isDescription = true;
+                }
                 if (eventType == XmlPullParser.TEXT) {
                     if (isName && isFound) {
                         currentFood.setName ( xpp.getText() );
@@ -101,6 +105,10 @@ public class FoodsXMLParser {
                     if (isPrice && isFound) {
                         currentFood.setPrice (Double.valueOf( xpp.getText()) );
                         isPrice=false;
+                    }
+                    if (isDescription && isFound) {
+                        currentFood.setDescription ( xpp.getText() );
+                        isDescription=false;
                     }
                 }
                 if (eventType == XmlPullParser

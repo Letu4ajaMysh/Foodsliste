@@ -28,7 +28,7 @@ public class FoodViewActivity extends AppCompatActivity {
         XmlPullParser xpp = getResources ().getXml ( R.xml.foods );
         FoodsXMLParser fxp = new FoodsXMLParser ( xpp );
         Food food = fxp.getFood (currentId);
-        Toast.makeText(getApplicationContext(), food.getName (), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), String.valueOf (food.getPrice ()), Toast.LENGTH_SHORT).show();
     }
 
 }
