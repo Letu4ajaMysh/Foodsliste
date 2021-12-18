@@ -70,50 +70,58 @@ public class FoodsXMLParser {
         return foodsList;
     }
 
-    public Food getFood(Integer id){
+    public Food getFood(Integer id) {
         Food currentFood = new Food ();
         Boolean isFound = false;
         Boolean isName = false;
         Boolean isPrice = false;
         Boolean isDescription = false;
+        Boolean isCalories = false;
 
         try {
             int eventType = xpp.getEventType();
             while (eventType != XmlPullParser.END_DOCUMENT) {
 
-                if (eventType == XmlPullParser
-                        .START_TAG && xpp.getName ( ).equals ( "food" )) {
-                   // currentId = Integer.valueOf ( xpp.getAttributeValue ( 0 ) );
-                    if (Integer.valueOf ( xpp.getAttributeValue ( 0 ) ) == id) {
-                        isFound = true;
+                if (eventType == XmlPullParser.START_TAG) {
+                    if (xpp.getName ( ).equals ( "food" )) {
+                        if (Integer.valueOf ( xpp.getAttributeValue ( 0 ) ) == id) {
+                            isFound = true;
+                        }
+                    }
+                    else if (xpp.getName().equals("name")) {
+                        isName = true;
+                    }
+                    else if (xpp.getName().equals("price")) {
+                        isPrice = true;
+                    }
+                    else if (xpp.getName().equals("description")) {
+                        isDescription = true;
+                    }
+                    else if (xpp.getName().equals("calories")) {
+                        isCalories = true;
                     }
                 }
-                if (eventType == XmlPullParser.START_TAG && xpp.getName().equals("name")) {
-                    isName = true;
-                }
-                if (eventType == XmlPullParser.START_TAG && xpp.getName().equals("price")) {
-                    isPrice = true;
-                }
-                if (eventType == XmlPullParser.START_TAG && xpp.getName().equals("description")) {
-                    isDescription = true;
-                }
-                if (eventType == XmlPullParser.TEXT) {
+                else if (eventType == XmlPullParser.TEXT) {
                     if (isName && isFound) {
                         currentFood.setName ( xpp.getText() );
                         isName=false;
                     }
-                    if (isPrice && isFound) {
+                    else if (isPrice && isFound) {
                         currentFood.setPrice (Double.valueOf( xpp.getText()) );
                         isPrice=false;
                     }
-                    if (isDescription && isFound) {
+                    else if (isDescription && isFound) {
                         currentFood.setDescription ( xpp.getText() );
                         isDescription=false;
                     }
+                    else if (isCalories && isFound) {
+                        currentFood.setCalories (Double.valueOf( xpp.getText()) );
+                        isCalories=false;
+                    }
                 }
-                if (eventType == XmlPullParser
+                else if (eventType == XmlPullParser
                         .END_TAG && xpp.getName ( ).equals ( "food" )) {
-                        isFound = false;
+                    isFound = false;
                 }
 
 
@@ -124,5 +132,4 @@ public class FoodsXMLParser {
             Log.v("Parser", "Ошибка при загрузке XML-документа: " + t.toString());
         }
         return currentFood;
-    }
-}
+    }}
